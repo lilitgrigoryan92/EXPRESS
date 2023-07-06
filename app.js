@@ -3,7 +3,7 @@ const bodyParser =require('body-parser')  ;
 
 const app = express();
 
-const userRoutes =require( './routes/userRoutes')
+const userRoutes =require('./routes/userRoutes')
 
 app.use(bodyParser.json());
 
@@ -11,7 +11,7 @@ app.use('/users',userRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).json({ error: 'Internal server error' });
+  res.status(500).json({ error: 'Server error' });
 });
 
 app.listen(3000, () => {

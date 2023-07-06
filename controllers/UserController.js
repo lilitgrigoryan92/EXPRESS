@@ -15,7 +15,7 @@ function writeUsers(users) {
   fs.writeFileSync(path, JSON.stringify(users, null, 2), 'utf8');
 }
 
-function generateId() {
+function getId() {
   const users = readUsers();
   if (users.length) {
     return users[users.length - 1].id + 1;
@@ -24,7 +24,7 @@ function generateId() {
   }
 }
 
-function getAllUsers(req, res) {
+function getUsers(req, res) {
   const users = readUsers();
   res.json(users);
 }
@@ -38,7 +38,7 @@ function createUser(req, res) {
   }
 
   const newUser = {
-    id: generateId(),
+    id: getId(),
     name,
     age,
     gender,
@@ -58,10 +58,7 @@ function updateUser(req, res) {
   const userId = parseInt(req.params.id);
   const { name, age, gender } = req.body;
 
-  if (!name || !age || !gender) {
-    res.status(400).json({ error: 'Name, age, and gender are required' });
-    return;
-  }
+  
 
   const users = readUsers();
   const userIndex = users.findIndex(user => user.id === userId);
@@ -110,21 +107,21 @@ function deleteUser(req, res) {
   const userId = parseInt(req.params.id);
 
   const users = readUsers();
-  const userIndex = users.findIndex(user => user.id === userId);
+  const i = users.findIndex(user => user.id === i);
 
-  if (userIndex === -1) {
+  if (i === -1) {
     res.status(404).json({ error: 'User not found' });
     return;
   }
 
-  users.splice(userIndex, 1);
+  users.splice(i, 1);
   writeUsers(users);
 
-  res.sendStatus(204);
+  res.sendStatus(200);
 }
 
 module.exports = {
-  getAllUsers,
+  getUsers,
   createUser,
   updateUser,
   activateUser,

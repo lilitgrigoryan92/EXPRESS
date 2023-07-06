@@ -11,7 +11,7 @@ const useApi = (req, res, next) => {
   }
 };
 
-app.get('/', useApi, UserController.getAllUsers);
+app.get('/', useApi, UserController.getUsers);
 app.post('/', useApi, UserController.createUser);
 app.put('/:id', useApi, UserController.updateUser);
 app.patch('/:id/activate', useApi, UserController.activateUser);
