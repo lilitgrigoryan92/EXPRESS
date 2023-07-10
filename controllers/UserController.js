@@ -2,18 +2,8 @@ const fs =require( "fs")
 
 const path = './users.json';
 
-function readUsers() {
-  try {
-    const data = fs.readFileSync(path, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    return [];
-  }
-}
+const { readUsers, writeUsers } = require('../services/user.service');
 
-function writeUsers(users) {
-  fs.writeFileSync(path, JSON.stringify(users, null, 2), 'utf8');
-}
 
 function getId() {
   const users = readUsers();
@@ -107,14 +97,14 @@ function deleteUser(req, res) {
   const userId = parseInt(req.params.id);
 
   const users = readUsers();
-  const i = users.findIndex(user => user.id === i);
+  const userIndex = users.findIndex(user => user.id === i);
 
-  if (i === -1) {
+  if (userIndex === -1) {
     res.status(404).json({ error: 'User not found' });
     return;
   }
 
-  users.splice(i, 1);
+  users.splice(userIndex, 1);
   writeUsers(users);
 
   res.sendStatus(200);
